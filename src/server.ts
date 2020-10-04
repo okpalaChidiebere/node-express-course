@@ -1,7 +1,7 @@
 import express from 'express';
 //const express = require('express'); //you  can inport or require the file. Import is a more best practise
 import bodyParser from 'body-parser';
-import { IndexRouter } from './controllers/v0/index.router'; //importing all our routes from index.router.ts
+import { IndexRouter, logger } from './controllers/v0/index.router'; //importing all our routes from index.router.ts
 
 (async () => {
 const app = express();
@@ -18,8 +18,11 @@ app.use(function(req, res, next) {
 
 app.use('/api/v0/', IndexRouter);
 
+//one way to init middleware
+//app.use(logger);
+
 // Root URI call
-app.get( "/", async ( req, res ) => {
+app.get( "/", logger, async ( req, res ) => { //the middle ware function will perform before it sends the string
     res.status(200).send( "/api/v0/" );
   } );
 
